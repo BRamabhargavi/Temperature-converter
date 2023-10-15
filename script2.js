@@ -1,25 +1,98 @@
-const calculateTemp = () => {
-    const inputTemp = document.getElementById('temp').value;
+// Temperature converter
 
-    const tempSelected = document.getElementById('temp_diff');
-    const valueTemp = temp_diff.options[tempSelected.selectedIndex].value;
+const input = document.querySelector('#input-box')
+const result = document.querySelector('#result-box')
+const inputSelect = document.querySelector('#input-dropdown')
+const resultSelect = document.querySelector('#result-dropdown')
 
-    // Celsius to Fahrenheit
-    const celToFah = (cel) => {
-        let fahrenheit = ((cel * 9 / 5) + 32).toFixed(1);
-        return fahrenheit;
-    }
+inputSelect.addEventListener('change', resultChange)
+resultSelect.addEventListener('change', insertChange)
 
-    // Fahrenheit to Celsius
-    const fahToCel = (fah) => {
-        let celsius = ((fah - 32) * 5 / 9).toFixed(1);
-        return celsius;
+// To auto change the result dropdown value
+function resultChange() {
+  if (
+    inputSelect.selectedOptions[0].value ===
+    resultSelect.selectedOptions[0].value
+  ) {
+    if (resultSelect.selectedIndex < 2) {
+      resultSelect.selectedIndex += 1
+    } else {
+      resultSelect.selectedIndex = 0
     }
+  }
+}
 
-    if (valueTemp == 'cel') {
-        document.getElementById("result").innerHTML = celToFah(inputTemp) + "&#176; Fahrenheit";
+// To auto change the insert dropdown value
+function insertChange() {
+  if (
+    resultSelect.selectedOptions[0].value ===
+    inputSelect.selectedOptions[0].value
+  ) {
+    if (inputSelect.selectedIndex < 2) {
+      inputSelect.selectedIndex += 1
+    } else {
+      inputSelect.selectedIndex = 0
     }
-    else {
-        document.getElementById("result").innerHTML = fahToCel(inputTemp) + "&#176; Celsius";
-    }
+  }
+}
+
+// converter button onclick function
+function converter() {
+  // For invalid input
+  if (input.value === '') {
+    result.value = ''
+    // invalid message
+    alert('Please enter a valid value in the inputbox')
+  }
+  // Celcius to farenheit
+  else if (
+    inputSelect.selectedOptions[0].value === 'Celcius' &&
+    resultSelect.selectedOptions[0].value === 'Farenheit'
+  ) {
+    result.value = ((Number(input.value) * 9) / 5 + 32).toFixed(2) + ' ' + '°F'
+    console.log(result.value)
+  }
+  // farenheit to celcius
+  else if (
+    inputSelect.selectedOptions[0].value === 'Farenheit' &&
+    resultSelect.selectedOptions[0].value === 'Celcius'
+  ) {
+    result.value =
+      (((Number(input.value) - 32) * 5) / 9).toFixed(2) + ' ' + '°C'
+    console.log(result.value)
+  }
+  // celcius to kelvin
+  else if (
+    inputSelect.selectedOptions[0].value === 'Celcius' &&
+    resultSelect.selectedOptions[0].value === 'Kelvin'
+  ) {
+    result.value = (Number(input.value) + 273.15).toFixed(2) + ' ' + 'K'
+    console.log(result.value)
+  }
+  // kelvin to celcius
+  else if (
+    inputSelect.selectedOptions[0].value === 'Kelvin' &&
+    resultSelect.selectedOptions[0].value === 'Celcius'
+  ) {
+    result.value = (Number(input.value) - 273.15).toFixed(2) + ' ' + '°C'
+    console.log(result.value)
+  }
+  // farenheit to kelvin
+  else if (
+    inputSelect.selectedOptions[0].value === 'Farenheit' &&
+    resultSelect.selectedOptions[0].value === 'Kelvin'
+  ) {
+    result.value =
+      (((Number(input.value) - 32) * 5) / 9 + 273.15).toFixed(2) + ' ' + 'K'
+    console.log(result.value)
+  }
+  // kelvin to farenheit
+  else if (
+    inputSelect.selectedOptions[0].value === 'Kelvin' &&
+    resultSelect.selectedOptions[0].value === 'Farenheit'
+  ) {
+    result.value =
+      (((Number(input.value) - 273.15) * 9) / 5 + 32).toFixed(2) + ' ' + '°F'
+    console.log(result.value)
+  }
 }
